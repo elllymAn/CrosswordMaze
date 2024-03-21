@@ -47,7 +47,8 @@ namespace WinFormsApp1
         private void Format_Using_Cell(int row, int col, char Letter, bool keyWord)
         {
             DataGridViewCell cell = grid[col, row];
-            if(!keyWord) cell.Style.BackColor = Color.White;
+            if(!keyWord) 
+                cell.Style.BackColor = Color.White;
             else cell.Style.BackColor = Color.Pink;    
             cell.ReadOnly = false;
             cell.Tag = Letter;
@@ -59,71 +60,55 @@ namespace WinFormsApp1
         }
         private void CreateCrosswordMaze()
         {
+          // Format_Using_Cell(5, 7, 'L', false);
+          //  Format_Using_Cell(1, 3, 'L', false);
             LoadData();
             double score = 0.0;
+            List<string> chsWord = new List<string>();
             Random rnd = new Random();
+            string Keyword;
             while (score <= 5.0)
             {
+                chsWord.Clear();
                 score = 0.0;
                 int mainInd = rnd.Next(words.Count);
-                string word = words[mainInd].Word;
-                if (grid.Rows.Count - 3 > word.Length)
+                Keyword = words[mainInd].Word;
+                if (grid.Rows.Count - 3 > Keyword.Length)
                 {
-                    //MessageBox.Show("322", "Warning", MessageBoxButtons.YesNo);
-                    score += word.Length * 0.5;
-                    string minorWord;
-                    if (rnd.Next(0,2) == 0)
+                    chsWord.Add(Keyword);
+                    score += Keyword.Length * 0.5;
+                    for (int i = 0; i < Keyword.Length; i++)
                     {
-                        for (int i = 0; i < word.Length/2; i++)
+                        int index;
+                        string minorWord;
+                        while (true)
                         {
-                            while(true)
+                            index = rnd.Next(words.Count);
+                            minorWord = words[index].Word;
+                            if (index != mainInd && !chsWord.Contains(minorWord))
                             {
-                                minorWord = words[rnd.Next(0, mainInd)].Word;
-                                if (minorWord.Contains(word[i])) break;
+                                if ( minorWord.Contains(Keyword[i]) &&
+                                        ((grid.Columns.Count / 2 - minorWord.IndexOf(Keyword[i]) >= 0) &&
+                                        ((grid.Columns.Count / 2 - minorWord.IndexOf(Keyword[i]) + minorWord.Length) - 1 < grid.Columns.Count)))
+                                {
+                                    chsWord.Add(minorWord);
+                                    break;
+                                }
                             }
-                            for (int j = 0; j < minorWord.Length; j++) Format_Using_Cell(i + 1, grid.Columns.Count / 2 - minorWord.IndexOf(word[i]) + j, minorWord[i], false);
-                            score += minorWord.Length * 0.25;
                         }
-                        for (int i = word.Length/2; i < word.Length; i++)
-                        {
-
-                            while (true)
-                            {
-                                minorWord = words[rnd.Next(mainInd+1, words.Count)].Word;
-                                if (minorWord.Contains(word[i])) break;
-                            }
-                            for (int j = 0; j < minorWord.Length; j++) 
-                                Format_Using_Cell(i + 1, grid.Columns.Count / 2 - minorWord.IndexOf(word[i]) + j, minorWord[i], false);
-                            score += minorWord.Length * 0.25;
-                        }
+                        score += minorWord.Length * 0.25;
                     }
-                    else
-                    {
-                        for (int i = 0; i < word.Length / 2; i++)
-                        {
-                            while (true)
-                            {
-                                minorWord = words[rnd.Next(mainInd + 1, words.Count)].Word;
-                                if (minorWord.Contains(word[i])) break;
-                            }
-                            for (int j = 0; j < minorWord.Length; j++) Format_Using_Cell(i + 1, grid.Columns.Count / 2 - minorWord.IndexOf(word[i]) + j, minorWord[i], false);
-                            score += minorWord.Length * 0.25;
-                        }
-                        for (int i = word.Length / 2; i < word.Length; i++)
-                        {
-                            while (true)
-                            {
-                                minorWord = words[rnd.Next(0, mainInd)].Word;
-                                if (minorWord.Contains(word[i])) break;
-                            }
-                            for (int j = 0; j < minorWord.Length; j++) Format_Using_Cell(i + 1, grid.Columns.Count / 2 - minorWord.IndexOf(word[i]) + j, minorWord[i], false);
-                            score += minorWord.Length * 0.25;
-                        }
-                    }
-                    for (int i = 0; i < word.Length; i++) Format_Using_Cell(i + 1, grid.Columns.Count / 2, word[i], true);
+                    
                 }
             }
-
+            for(int i = 1; i < chsWord.Count; i++)
+            {
+                for (int j = 0; j < chsWord[i].Length - 1; j++)
+                {
+                    Format_Using_Cell(i, grid.Columns.Count / 2 - chsWord[i].IndexOf(chsWord[0][i-1]) + j, chsWord[i][j], false);
+                }
+            }
+            for (int j = 0; j < chsWord[0].Length; j++) Format_Using_Cell(j + 1, grid.Columns.Count / 2, chsWord[0][j], true);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
