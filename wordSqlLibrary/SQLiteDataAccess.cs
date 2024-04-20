@@ -12,15 +12,22 @@ namespace wordSqlLibrary
 {
     public class SQLiteDataAccess
     {
-        public static List<WordModel> LoadWords(int? diff)
+        //public static List<WordModel> LoadWords(int? diff)
+        //{
+        //    using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+        //    {
+        //        var output = cnn.Query<WordModel>("SELECT * FROM Words WHERE Difficulty = " + diff.ToString(), new DynamicParameters());
+        //        return output.ToList();
+        //    }
+        //}
+        public static List<WordModel> LoadWords(int? diff, string? topic)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
-                var output = cnn.Query<WordModel>("SELECT * FROM Words WHERE Difficulty = " + diff.ToString(), new DynamicParameters());
+                var output = cnn.Query<WordModel>("SELECT Word, Query FROM Words WHERE Difficulty = " + diff.ToString() + " AND Topic='" + topic + "'", new DynamicParameters());
                 return output.ToList();
             }
         }
-
         public static void SaveWord(WordModel word)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))

@@ -50,13 +50,13 @@
             Column19 = new DataGridViewTextBoxColumn();
             Column20 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
-            menuStrip1 = new MenuStrip();
-            menuStrip2 = new MenuStrip();
-            menuStrip3 = new MenuStrip();
-            fileToolStripMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem = new ToolStripMenuItem();
+            Column21 = new DataGridViewTextBoxColumn();
+            button1 = new Button();
+            pictureBox1 = new PictureBox();
+            label1 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)grid).BeginInit();
-            menuStrip3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // grid
@@ -65,9 +65,10 @@
             grid.AllowUserToDeleteRows = false;
             grid.AllowUserToResizeColumns = false;
             grid.AllowUserToResizeRows = false;
+            grid.BackgroundColor = Color.FromArgb(193, 185, 185);
             grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             grid.ColumnHeadersVisible = false;
-            grid.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column5, Column6, Column7, Column8, Column9, Column10, Column11, Column12, Column13, Column14, Column15, Column16, Column17, Column18, Column19, Column20, Column4 });
+            grid.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column5, Column6, Column7, Column8, Column9, Column10, Column11, Column12, Column13, Column14, Column15, Column16, Column17, Column18, Column19, Column20, Column4, Column21 });
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.TopCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Window;
             dataGridViewCellStyle1.Font = new Font("Arial", 9.75F, FontStyle.Italic, GraphicsUnit.Point, 204);
@@ -77,14 +78,17 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.Desktop;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             grid.DefaultCellStyle = dataGridViewCellStyle1;
-            grid.Location = new Point(0, 24);
+            grid.Location = new Point(1, 0);
             grid.Name = "grid";
             grid.RowHeadersVisible = false;
             grid.ScrollBars = ScrollBars.None;
-            grid.Size = new Size(800, 426);
+            grid.Size = new Size(801, 449);
             grid.TabIndex = 0;
             grid.CellBeginEdit += grid_CellBeginEdit;
+            grid.CellClick += grid_CellClick;
+            grid.CellValueChanged += grid_CellValueChanged;
             grid.EditingControlShowing += grid_EditingControlShowing;
+            grid.SelectionChanged += grid_SelectionChanged;
             // 
             // Column1
             // 
@@ -190,65 +194,70 @@
             Column4.MaxInputLength = 1;
             Column4.Name = "Column4";
             // 
-            // menuStrip1
+            // Column21
             // 
-            menuStrip1.Location = new Point(0, 48);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
-            menuStrip1.TabIndex = 1;
-            menuStrip1.Text = "menuStrip1";
+            Column21.HeaderText = "Column21";
+            Column21.Name = "Column21";
             // 
-            // menuStrip2
+            // button1
             // 
-            menuStrip2.Location = new Point(0, 24);
-            menuStrip2.Name = "menuStrip2";
-            menuStrip2.Size = new Size(800, 24);
-            menuStrip2.TabIndex = 2;
-            menuStrip2.Text = "menuStrip2";
+            button1.BackColor = Color.FromArgb(217, 217, 217);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Lucida Console", 14.25F, FontStyle.Bold);
+            button1.Location = new Point(538, 385);
+            button1.Name = "button1";
+            button1.Size = new Size(237, 37);
+            button1.TabIndex = 5;
+            button1.Text = "ЗАВЕРШИТЬ ИГРУ";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
-            // menuStrip3
+            // pictureBox1
             // 
-            menuStrip3.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
-            menuStrip3.Location = new Point(0, 0);
-            menuStrip3.Name = "menuStrip3";
-            menuStrip3.Size = new Size(800, 24);
-            menuStrip3.TabIndex = 3;
-            menuStrip3.Text = "menuStrip3";
+            pictureBox1.Location = new Point(12, 361);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(487, 77);
+            pictureBox1.TabIndex = 6;
+            pictureBox1.TabStop = false;
             // 
-            // fileToolStripMenuItem
+            // label1
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
-            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new Size(37, 20);
-            fileToolStripMenuItem.Text = "File";
+            label1.AutoSize = true;
+            label1.Font = new Font("Lucida Console", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.Location = new Point(22, 397);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 19);
+            label1.TabIndex = 7;
             // 
-            // exitToolStripMenuItem
+            // label2
             // 
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
-            exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            label2.AutoSize = true;
+            label2.Font = new Font("Lucida Console", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label2.Location = new Point(22, 370);
+            label2.Name = "label2";
+            label2.Size = new Size(105, 19);
+            label2.TabIndex = 8;
+            label2.Text = "ОПИСАНИЕ";
             // 
             // Game
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(803, 450);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(pictureBox1);
+            Controls.Add(button1);
             Controls.Add(grid);
-            Controls.Add(menuStrip1);
-            Controls.Add(menuStrip2);
-            Controls.Add(menuStrip3);
-            HelpButton = true;
-            MainMenuStrip = menuStrip1;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "Game";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Game";
+            Text = "CrosswordMaze";
             FormClosing += Game_FormClosing;
             Load += Game_Load;
             ((System.ComponentModel.ISupportInitialize)grid).EndInit();
-            menuStrip3.ResumeLayout(false);
-            menuStrip3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -256,11 +265,6 @@
         #endregion
 
         private DataGridView grid;
-        private MenuStrip menuStrip1;
-        private MenuStrip menuStrip2;
-        private MenuStrip menuStrip3;
-        private ToolStripMenuItem fileToolStripMenuItem;
-        private ToolStripMenuItem exitToolStripMenuItem;
         private DataGridViewTextBoxColumn Column1;
         private DataGridViewTextBoxColumn Column2;
         private DataGridViewTextBoxColumn Column3;
@@ -281,5 +285,10 @@
         private DataGridViewTextBoxColumn Column19;
         private DataGridViewTextBoxColumn Column20;
         private DataGridViewTextBoxColumn Column4;
+        private Button button1;
+        private PictureBox pictureBox1;
+        private Label label1;
+        private Label label2;
+        private DataGridViewTextBoxColumn Column21;
     }
 }

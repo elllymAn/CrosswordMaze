@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using wordSqlLibrary;
+﻿
 
 namespace WinFormsApp1
 {
@@ -15,6 +6,7 @@ namespace WinFormsApp1
     {
         public static int? _difficulty;
         public static string? _topic;
+        public static string? _type;
         public StartForm()
         {
             InitializeComponent();
@@ -22,22 +14,11 @@ namespace WinFormsApp1
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            Game form = new Game();
-            if (_difficulty != null) form.Show();
-            else MessageBox.Show("Please, select difficulty!", "Error");
-        }
+            Game form = new Game(this);
+            if (_difficulty != null && _topic != null && _type != null) { form.Show(); this.Hide(); }
+            else MessageBox.Show("Выбраны не все опции", "Ошибка");
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to quit the game?", "Warning", MessageBoxButtons.YesNo) == DialogResult.Yes) 
-                Application.Exit();
         }
-
-        private void getInfoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("I fuck your mum", "Info");
-        }
-
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
@@ -54,9 +35,39 @@ namespace WinFormsApp1
             _difficulty = 2;
         }
 
+        private void StartForm_Load(object sender, EventArgs e)
+        {
+           // this.Width = SystemInformation.PrimaryMonitorSize.Width;
+           // this.Height = SystemInformation.PrimaryMonitorSize.Height;
+
+            pictureBox1.ImageLocation = @"..\..\..\Resources\значок1.png";
+            //pictureBox1.MinimumSize = new Size(56, 58);
+            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+        }
+
+        private void radioButton9_CheckedChanged_1(object sender, EventArgs e)
+        {
+            _type = "linear";
+        }
+
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+            _type = "key";
+        }
+
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
-            _difficulty = 3;
+            _topic = "nature";
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            _topic = "town";
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+            _topic = "science";
         }
     }
 }
